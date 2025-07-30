@@ -1,21 +1,17 @@
-import pygame, sys  # pygame is the foundation the game runs on and sys is what reads user inputs apparently
-from pygame.locals import *
+# Imports
+import sys
+import pygame
 
-#Configurations and such
-
-pygame.init() # Must be used to allow pygame to be used
-icon = pygame.image.load("truckin.gif") #Sets the little image on the program
-pygame.display.set_icon(icon)
-pygame.display.set_caption("It's a work in progress")#Sets the text on the program window
+# Configuration
+pygame.init()
 fps = 60
 fpsClock = pygame.time.Clock()
-SCREEN_WIDTH = 640
-SCREEN_HEIGHT = 480
-SCREEN = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT)) #Sets window size
-SCREEN.fill((0,225,225)) 
-font = pygame.font.Font('Mario-Kart-DS.ttf', 40) #Sets font
-objects = []
+width, height = 640, 480
+screen = pygame.display.set_mode((width, height))
 
+font = pygame.font.Font('Mario-Kart-DS.ttf', 40) #Sets font
+
+objects = []
 
 class Button():
     def __init__(self, x, y, width, height, buttonText='Button', onclickFunction=None, onePress=False):
@@ -55,33 +51,19 @@ class Button():
             self.buttonRect.width/2 - self.buttonSurf.get_rect().width/2,
             self.buttonRect.height/2 - self.buttonSurf.get_rect().height/2
         ])
-        SCREEN.blit(self.buttonSurface, self.buttonRect)
+        screen.blit(self.buttonSurface, self.buttonRect)
 def myFunction():
     print('Button Pressed')
 
-
-
-
-Button(SCREEN_WIDTH/2-200, SCREEN_HEIGHT/2-50, 400, 100, 'AWESOME BUTTON', myFunction)
-
-def main():
-
-    while True:
-
-        pygame.display.flip()
-    
-        for object in objects:
-            object.process()
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == KEYDOWN:
-             if event.key == K_ESCAPE:
-                pygame.quit()
-                sys.exit()
-            pygame.display.update()  
-
-
-main()
+Button(30, 30, 400, 100, 'Button One (onePress)', myFunction)
+Button(30, 140, 400, 100, 'Button Two (multiPress)', myFunction, True)
+while True:
+    screen.fill((20, 20, 20))
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+    for object in objects:
+        object.process()
+    pygame.display.flip()
+    fpsClock.tick(fps)
