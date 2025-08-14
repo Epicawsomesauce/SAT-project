@@ -58,11 +58,17 @@ class Button():
         SCREEN.blit(self.buttonSurface, self.buttonRect)
 def myFunction():
     print('Button Pressed')
-
-
+def BUTTONQUIT():
+    SCREEN.fill((20,20,20))
+    pygame.display.set_caption("Goodbye")
+    pygame.time.delay(1000)
+    pygame.quit()
+    sys.exit()
 
 
 Button(SCREEN_WIDTH/2-200, SCREEN_HEIGHT/2-50, 400, 100, 'AWESOME BUTTON', myFunction)
+Button(SCREEN_WIDTH/2, SCREEN_HEIGHT*3/4, 200, 50, 'LEAVE', BUTTONQUIT)
+
 
 def main():
 
@@ -71,7 +77,7 @@ def main():
         pygame.display.flip()
     
         for object in objects:
-            object.process()
+           object.process()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

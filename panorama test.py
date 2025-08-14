@@ -5,7 +5,7 @@ import math
 
 #Read images
 
-imagefiles = glob.glob("IDK/*") # Need to figue out let it accsess the correct file
+imagefiles = glob.glob("Panorama test/*") # Need to figue out let it accsess the correct file
 imagefiles.sort()
 
 images = []
