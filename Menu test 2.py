@@ -1,6 +1,7 @@
 import pygame, sys  # pygame is the foundation the game runs on and sys is what reads user inputs apparently
 from pygame.locals import *
 from PIL import Image 
+from pygame import mixer
 
 #Configurations and such
 
@@ -10,9 +11,9 @@ pygame.display.set_icon(icon)
 pygame.display.set_caption("It's a work in progress")#Sets the text on the program window
 fps = 60
 fpsClock = pygame.time.Clock()
-SCREEN = pygame.display.set_mode((1280, 720)) #Sets window size
-objects = []
-gamestate = 0
+SCREEN = pygame.display.set_mode((1080, 620)) #Sets window size
+mixer.init()
+mixer.music.set_volume(0.7)
 
 def get_font(size):
     return pygame.font.Font("Mario-Kart-DS.ttf", size) #Sets font
@@ -47,16 +48,34 @@ class Button():
 		else:
 			self.text = self.font.render(self.text_input, True, self.base_color)
 
+def play():
+      print("AwesomeSauce")
+def quit():
+      pygame.quit()
+      sys.exit()
+def duck():
+      mixer.music.play()
+      pygame.time.wait(500)
+      mixer.music.stop()
+      
+      
 
 def main():
 
     while True:
 		
-        MENU_MOUSE_POS = pygame.mouse.get_pos()
-        PLAY_BUTTON = Button(image=pygame.image.load("basebsll.jpg"), pos=(640, 250), 
-                            text_input="AWESOME SAUCE", font=get_font(75), base_color="#d7fcd4", hovering_color="White")
+        SCREEN.fill((0,225,225))
+        mixer.music.load("duck.mp3")
 
-        for button in [PLAY_BUTTON]:
+        MENU_MOUSE_POS = pygame.mouse.get_pos()
+        PLAY_BUTTON = Button(image=pygame.image.load("basebsll.png"), pos=(540, 250), 
+                            text_input="AWESOME SAUCE", font=get_font(75), base_color="#ff9ae2", hovering_color="#ff86dd")
+        QUIT_BUTTON= Button(image=pygame.image.load("Peashooter.png"), pos=(810, 400), 
+                            text_input="LEAVE", font=get_font(75), base_color="#ff9ae2", hovering_color="#ff86dd")
+        DUCK_BUTTON= Button(image=pygame.image.load("duck.png"), pos=(270, 400), 
+                            text_input="LEAVE", font=get_font(75), base_color="#ff9ae2", hovering_color="#ff86dd")
+
+        for button in [PLAY_BUTTON, QUIT_BUTTON, DUCK_BUTTON]:
             button.changeColor(MENU_MOUSE_POS)
             button.update(SCREEN)
 
@@ -68,7 +87,15 @@ def main():
              if event.key == K_ESCAPE:
                 pygame.quit()
                 sys.exit()
-            pygame.display.update()  
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if PLAY_BUTTON.checkForInput(MENU_MOUSE_POS):
+                    play()
+                if QUIT_BUTTON.checkForInput(MENU_MOUSE_POS):
+                      quit()
+                if DUCK_BUTTON.checkForInput(MENU_MOUSE_POS):
+                      duck()
+					
+            pygame.display.update() 
 
 
 main()
