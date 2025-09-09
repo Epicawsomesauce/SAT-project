@@ -65,9 +65,11 @@ def BUTTONQUIT():
     pygame.quit()
     sys.exit()
 def hide():
-    objects = []
-    gamestate = 1
-
+    while True:
+        SCREEN.fill((0,225,225))
+        pygame.display.set_caption("Testing")
+        pygame.display.update()
+        
 
 Button(SCREEN_WIDTH/2-200, SCREEN_HEIGHT/2-50, 400, 100, 'AWESOME BUTTON', hide) #Need to add function to call the game test file and run it
 Button(SCREEN_WIDTH/2+20, SCREEN_HEIGHT*3/4, 200, 50, 'LEAVE', BUTTONQUIT)
@@ -78,10 +80,10 @@ def main():
     while True:
 
         pygame.display.flip()
+        pygame.display.set_caption("It's a work in progress")#Sets the text on the program window
 
-        if gamestate == 0:
-            for object in objects:
-              object.process()
+        for object in objects:
+            object.process()
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
